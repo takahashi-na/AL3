@@ -33,7 +33,7 @@ void GameScene::Initialize() {
 	viewProjection_.Initialize();
 
 	// サウンドデータの読み込み
-	soundDataHandle_ = audio_->LoadWave("mokugyo.wav");
+	soundDataHandle_ = audio_->LoadWave("fanfare.wav");
 	// 音声再生
 	audio_->PlayWave(soundDataHandle_);
 	// 音声再生
