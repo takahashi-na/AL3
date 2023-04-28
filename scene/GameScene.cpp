@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include <cassert>
 #include "MathUtilityForText.h"
+#include "time.h"
 
 // コンストラクタ
 GameScene::GameScene() {}
@@ -12,6 +13,7 @@ GameScene::~GameScene() {
     delete modelStage_;  // ステージ
 	delete modelPlayer_; // プレイヤー
 	delete modelBeam_;   // ビーム
+	delete modelEnemy_;  // 敵
 }
 
 // 初期化
@@ -58,6 +60,15 @@ void GameScene::Initialize() {
 	modelBeam_ = Model::Create();
 	worldTransformBeam_.scale_ = {0.3f, 0.3f, 0.3f};
 	worldTransformBeam_.Initialize();
+
+	// 敵
+	textureHandleEnemy_ = TextureManager::Load("enemy.png");
+	modelEnemy_ = Model::Create();
+	worldTransformEnemy_.scale_ = {0.5f, 0.5f, 0.5f};
+	worldTransformEnemy_.Initialize();
+
+	// 乱数の初期化
+	srand((unsigned int)time(NULL));
 }
 
 // 更新
@@ -68,6 +79,9 @@ void GameScene::Update() {
 
 	// 弾更新
     BeamUpdate();
+
+	// 敵更新
+	EnemyUpdate();
 }
 
 void GameScene::PlayerUpdate(){
@@ -133,6 +147,52 @@ void GameScene::BeamBorn()
 	}
 }
 
+// 敵更新
+void GameScene::EnemyUpdate()
+{
+	EnemyMove();
+	EnemyBorn();
+
+	// 変換行列を更新
+	worldTransformEnemy_.matWorld_ = MakeAffineMatrix(
+	worldTransformEnemy_.scale_, worldTransformEnemy_.rotation_,
+	worldTransformEnemy_.translation_);
+
+	// 変換行列を定数バッファに転送
+	worldTransformEnemy_.TransferMatrix();
+}
+
+// 敵移動
+void GameScene::EnemyMove() 
+{
+	if (isEnemyFlag_ == true)
+	{
+		worldTransformEnemy_.rotation_.x -= 0.15f;
+		worldTransformEnemy_.translation_.z -= 0.5f;
+	}
+
+	// 画面端処理
+	if (worldTransformEnemy_.translation_.z < -5)
+	isEnemyFlag_ = false;
+}
+
+void GameScene::EnemyBorn()
+{
+	if (isEnemyFlag_ == false)
+	{ 
+		isEnemyFlag_ = true; 
+
+		// 乱数処理
+		int x = rand() % 80;
+		float x2 = (float)x / 10 - 4;
+
+		worldTransformEnemy_.translation_.x = x2;
+		worldTransformEnemy_.translation_.z = 40.f;
+	}
+
+}
+
+
 // 描画
 void GameScene::Draw() {
 
@@ -171,9 +231,11 @@ void GameScene::Draw() {
 
 	// ビーム
 	if (isBeamFlag_ == true)
-	{
-		modelBeam_->Draw(worldTransformBeam_, viewProjection_, textureHandleBeam_);
-	}
+	modelBeam_->Draw(worldTransformBeam_, viewProjection_, textureHandleBeam_);
+
+	// 敵
+	if (isEnemyFlag_==true)
+	modelEnemy_->Draw(worldTransformEnemy_, viewProjection_, textureHandleEnemy_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
