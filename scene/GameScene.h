@@ -75,6 +75,22 @@ public: // メンバ関数
 	/// </summary>
 	void EnemyBorn();
 
+	/// <summary>
+	/// 衝突判定
+	/// </summary>
+	void Collision();
+
+	/// <summary>
+	/// 衝突判定(プレイヤーと敵)
+	/// </summary>
+	void CollisionPlayerEnemy();
+
+	/// <summary>
+	/// 衝突判定(ビームと敵)
+	/// </summary>
+	void CollisionBeamEnemy();
+
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;

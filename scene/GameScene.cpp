@@ -176,6 +176,7 @@ void GameScene::EnemyMove()
 	isEnemyFlag_ = false;
 }
 
+// 敵生成
 void GameScene::EnemyBorn()
 {
 	if (isEnemyFlag_ == false)
@@ -192,6 +193,45 @@ void GameScene::EnemyBorn()
 
 }
 
+// 衝突判定
+void GameScene::Collision()
+{ 
+	CollisionPlayerEnemy();
+}
+
+// 衝突判定(プレイヤーと敵)
+void GameScene::CollisionPlayerEnemy() {
+	// 敵が存在すれば
+	if (isEnemyFlag_ == true) {
+		// 差を求める
+		float dx = abs(worldTransformPlayer_.translation_.x - worldTransformEnemy_.translation_.x);
+		float dz = abs(worldTransformPlayer_.translation_.z - worldTransformEnemy_.translation_.z);
+	    
+		// 衝突したら
+		if (dx < 1 && dz < 1)
+		{
+			// 存在しない
+			isEnemyFlag_ = false;
+		}
+	}
+}
+
+void GameScene::CollisionBeamEnemy() { 
+	// ビームと敵が両方とも存在するなら
+	if (isBeamFlag_ == true && isEnemyFlag_)
+	{
+		// 差を求める
+		float dx = abs(worldTransformBeam_.translation_.x - worldTransformEnemy_.translation_.x);
+		float dz = abs(worldTransformBeam_.translation_.z - worldTransformEnemy_.translation_.z);
+
+		// 衝突したら
+		if (dx < 1 && dz < 1) {
+			// 存在しない
+			isBeamFlag_ = false;
+			isEnemyFlag_ = false;
+		}
+	}
+}
 
 // 描画
 void GameScene::Draw() {
