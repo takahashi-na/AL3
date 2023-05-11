@@ -134,4 +134,13 @@ private: // メンバ変数
 
 	int gameScore_ = 0;  // ゲームスコア
 	int playerLife_ = 3; // プレイヤーライフ
+
+private:
+	void GamePlayUpdate();  // ゲームプレイ更新
+	void GamePlayDraw3D();	// ゲームプレイ3D表示
+	void GamePlayDraw2DBack();	// ゲームプレイ背景2D表示
+	void GamePlayDraw2DNear();	// ゲームプレイ近景2D表示
+
+	// シーン遷移用
+	int sceneMode_ = 0;  // シーンモード(0:ゲームプレイ　1:タイトル)
 };

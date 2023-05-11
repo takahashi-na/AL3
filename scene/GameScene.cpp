@@ -76,19 +76,14 @@ void GameScene::Initialize() {
 }
 
 // 更新
-void GameScene::Update() {
-
-	// 自機更新
-	PlayerUpdate(); 
-
-	// 弾更新
-    BeamUpdate();
-
-	// 敵更新
-	EnemyUpdate();
-
-	// 当たり判定
-	Collision();
+void GameScene::Update()
+{
+	switch (sceneMode_)
+	{
+	case 0:
+	    GamePlayUpdate();  // ゲームプレイ更新
+		break;
+	}
 }
 
 void GameScene::PlayerUpdate(){
@@ -257,12 +252,13 @@ void GameScene::Draw() {
 #pragma region 背景スプライト描画
 	// 背景スプライト描画前処理
 	Sprite::PreDraw(commandList);
-
-	/// <summary>
-	/// ここに背景スプライトの描画処理を追加できる
-	/// </summary>
-	// 背景
-	spriteBG_->Draw();
+	
+	// 各シーンの背景2D表示を呼び出す
+	switch (sceneMode_) {
+	case 0:
+	    GamePlayDraw2DBack();   // ゲームプレイ2D表示
+		break;
+	}
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -274,23 +270,12 @@ void GameScene::Draw() {
 	// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
 
-	/// <summary>
-	/// ここに3Dオブジェクトの描画処理を追加できる
-	/// </summary>
-	
-	// ステージ
-	modelStage_->Draw(worldTransformStage_, viewProjection_, textureHandleStage_);
-
-	// プレイヤー
-	modelPlayer_->Draw(worldTransformPlayer_, viewProjection_, textureHandlePlayer_);
-
-	// ビーム
-	if (isBeamFlag_ == true)
-	modelBeam_->Draw(worldTransformBeam_, viewProjection_, textureHandleBeam_);
-
-	// 敵
-	if (isEnemyFlag_==true)
-	modelEnemy_->Draw(worldTransformEnemy_, viewProjection_, textureHandleEnemy_);
+    // 各シーンの背景3D表示を呼び出す
+	switch (sceneMode_) {
+	case 0:
+		GamePlayDraw3D(); // ゲームプレイ3D表示
+		break;
+	}
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -300,22 +285,65 @@ void GameScene::Draw() {
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(commandList)
 ;
-	// score
-	char str[100];
-	sprintf_s(str, "SCORE %d", gameScore_);
-	debugText_->Print(str,200,10,2);
-
-	sprintf_s(str, "LIFE %d", playerLife_);
-	debugText_->Print(str, 900, 10, 2);
-
+	switch (sceneMode_) {
+	case 0:
+		GamePlayDraw2DNear(); // ゲームプレイ2D近景表示
+		break;
+	}
 	debugText_->DrawAll();
-
-	/// <summary>
-	/// ここに前景スプライトの描画処理を追加できる
-	/// </summary>
 	
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
 #pragma endregion
+}
+
+// ゲームプレイ更新
+void GameScene::GamePlayUpdate() 
+{
+	// 自機更新
+	PlayerUpdate();
+
+	// 弾更新
+	BeamUpdate();
+
+	// 敵更新
+	EnemyUpdate();
+
+	// 当たり判定
+	Collision();
+}
+
+// ゲームプレイ表示3D
+void GameScene::GamePlayDraw3D() {
+	// ステージ
+	modelStage_->Draw(worldTransformStage_, viewProjection_, textureHandleStage_);
+
+	// プレイヤー
+	modelPlayer_->Draw(worldTransformPlayer_, viewProjection_, textureHandlePlayer_);
+
+	// ビーム
+	if (isBeamFlag_ == true)
+		modelBeam_->Draw(worldTransformBeam_, viewProjection_, textureHandleBeam_);
+
+	// 敵
+	if (isEnemyFlag_ == true)
+		modelEnemy_->Draw(worldTransformEnemy_, viewProjection_, textureHandleEnemy_);
+}
+
+// ゲームプレイ表示2D背景
+void GameScene::GamePlayDraw2DBack() {
+	// 背景
+	spriteBG_->Draw();
+}
+
+// ゲームプレイ近景2D表示
+void GameScene::GamePlayDraw2DNear() {
+	// score
+	char str[100];
+	sprintf_s(str, "SCORE %d", gameScore_);
+	debugText_->Print(str, 200, 10, 2);
+
+	sprintf_s(str, "LIFE %d", playerLife_);
+	debugText_->Print(str, 900, 10, 2);
 }
