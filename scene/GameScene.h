@@ -129,18 +129,41 @@ private: // メンバ変数
 	WorldTransform worldTransformEnemy_;
 	bool isEnemyFlag_ = false;
 
+	// タイトル(スプライト)
+	uint32_t textureHandleTitle_ = 0;
+	Sprite* spriteTitle_ = nullptr;
+
+	// タイトル(エンター)
+	uint32_t textureHandleEnter_ = 0;
+	Sprite* spriteEnter_ = nullptr;
+
+	// ゲームオーバー
+	uint32_t textureHandleGameOver_ = 0;
+	Sprite* spriteGameOver_ = nullptr;
+
 	// デバッグテキスト
 	DebugText* debugText_ = nullptr;
 
-	int gameScore_ = 0;  // ゲームスコア
-	int playerLife_ = 3; // プレイヤーライフ
+	int gameScore_ = 0;   // ゲームスコア
+	int playerLife_ = 3;  // プレイヤーライフ
+	int gameTimer_ = 0; // タイマー
 
 private:
+	// ゲームプレイ
 	void GamePlayUpdate();  // ゲームプレイ更新
 	void GamePlayDraw3D();	// ゲームプレイ3D表示
 	void GamePlayDraw2DBack();	// ゲームプレイ背景2D表示
 	void GamePlayDraw2DNear();	// ゲームプレイ近景2D表示
+	void GamePlayStart();    // ゲーム開始時
+
+	// タイトル
+	void TitleUpdate();
+	void TitleDraw2DNear();
+
+	// ゲームオーバー
+	void GameOverUpdate();      // ゲームオーバー画面の更新
+	void GameOverDraw2DNear();  // ゲームオーバー近景2D表示
 
 	// シーン遷移用
-	int sceneMode_ = 0;  // シーンモード(0:ゲームプレイ　1:タイトル)
+	int sceneMode_ = 1;  // シーンモード(0:ゲームプレイ　1:タイトル)
 };
