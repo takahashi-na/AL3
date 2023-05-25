@@ -119,15 +119,19 @@ private: // メンバ変数
 
 	// ビーム
 	uint32_t textureHandleBeam_ = 0;
-	Model* modelBeam_ = nullptr;
-	WorldTransform worldTransformBeam_;
-	bool isBeamFlag_ = false;
+	Model* modelBeam_ = {};
+	WorldTransform worldTransformBeam_[10];
+	bool isBeamFlag_[10] = {};
+
+	int beamTimer_ = 0;
 
 	// 敵
 	uint32_t textureHandleEnemy_ = 0;
 	Model* modelEnemy_ = nullptr;
-	WorldTransform worldTransformEnemy_;
-	bool isEnemyFlag_ = false;
+	WorldTransform worldTransformEnemy_[10];
+	bool isEnemyFlag_[10] = {};
+	bool enemyFlag[10] = {};
+	float enemySpeed_[10] = {};// 敵のスピード
 
 	// タイトル(スプライト)
 	uint32_t textureHandleTitle_ = 0;
@@ -147,6 +151,14 @@ private: // メンバ変数
 	int gameScore_ = 0;   // ゲームスコア
 	int playerLife_ = 3;  // プレイヤーライフ
 	int gameTimer_ = 0; // タイマー
+
+	//	サウンド
+	uint32_t soundDataHandleTitleBGM_ = 0;      // タイトルBGM
+	uint32_t soundDataHandleGamePlayBGM_ = 0;	// ゲームプレイBGM
+	uint32_t soundDataHandleGameOverBGM_ = 0;	// ゲームオーバーBGM
+	uint32_t soundDataHandleEnemyHitSE_ = 0;	// 敵ヒットSE
+	uint32_t soundDataHandlePlayerHitSE_ = 0;	// プレイヤーヒットSE
+	uint32_t voiceHandleBGM_ = 0;				// 音声再生ハンドル
 
 private:
 	// ゲームプレイ
