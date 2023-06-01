@@ -109,8 +109,8 @@ private: // メンバ変数
 
 	// ステージ
 	uint32_t textureHandleStage_ = 0;
-	Model* modelStage_ = nullptr;
-	WorldTransform worldTransformStage_;
+	Model* modelStage_ = 0;
+	WorldTransform worldTransformStage_[20];
 
 	// プレイヤー
 	uint32_t textureHandlePlayer_ = 0;
@@ -129,9 +129,9 @@ private: // メンバ変数
 	uint32_t textureHandleEnemy_ = 0;
 	Model* modelEnemy_ = nullptr;
 	WorldTransform worldTransformEnemy_[10];
-	bool isEnemyFlag_[10] = {};
-	bool enemyFlag[10] = {};
-	float enemySpeed_[10] = {};// 敵のスピード
+	int isEnemyFlag_[10] = {};
+	float enemySpeed_[10] = {};      // 敵の速度
+	float enemyJumpSpeed_[10] = {};  // 敵ジャンプの移動速度
 
 	// タイトル(スプライト)
 	uint32_t textureHandleTitle_ = 0;
@@ -169,13 +169,20 @@ private:
 	void GamePlayStart();    // ゲーム開始時
 
 	// タイトル
-	void TitleUpdate();
-	void TitleDraw2DNear();
+	void TitleUpdate();         // タイトル画面の更新
+	void TitleDraw2DNear();		// タイトル画面の2D表示
 
 	// ゲームオーバー
 	void GameOverUpdate();      // ゲームオーバー画面の更新
 	void GameOverDraw2DNear();  // ゲームオーバー近景2D表示
 
+	// ステージ
+	void StageUpdate();         // ステージの更新
+
 	// シーン遷移用
 	int sceneMode_ = 1;  // シーンモード(0:ゲームプレイ　1:タイトル)
+
+	// 敵
+	void EnemyJump();    // 敵の消滅の演出
+
 };
