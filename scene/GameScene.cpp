@@ -1,19 +1,33 @@
 #include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
+#include "ViewProjection.h"
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() {}
+GameScene::~GameScene() 
+{ 
+	delete stage_;              // ステージ
+}
 
 void GameScene::Initialize() {
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
+
+	// カメラ
+	viewProjection_.Initialize();
+
+	// ステージ
+	stage_ = new Stage();       
+	stage_->Inisialize(viewProjection_);
 }
 
-void GameScene::Update() {}
+void GameScene::Update() 
+{ 
+	stage_->Update();
+}
 
 void GameScene::Draw() {
 
@@ -53,6 +67,8 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+	
+	stage_->Draw2DFar();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
