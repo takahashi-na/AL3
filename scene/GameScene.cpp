@@ -7,7 +7,7 @@ GameScene::GameScene() {}
 
 GameScene::~GameScene() 
 { 
-	delete stage_;              // ステージ
+	delete stage_; // ステージ
 }
 
 void GameScene::Initialize() {
@@ -21,7 +21,7 @@ void GameScene::Initialize() {
 
 	// ステージ
 	stage_ = new Stage();       
-	stage_->Inisialize(viewProjection_);
+	stage_->Initialize(viewProjection_);
 }
 
 void GameScene::Update() 
