@@ -7,7 +7,6 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "MathUtilityForText.h"
-#include <cassert>
 
 class Player
 {
