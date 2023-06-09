@@ -1,5 +1,8 @@
 ﻿#pragma once
 #include"Sprite.h"
+#include "ViewProjection.h"
+#include "Model.h"
+#include "WorldTransform.h"
 
 class Stage 
 {
@@ -11,8 +14,7 @@ public:
 	~Stage();
 
 	// 初期化
-	void Inisialize(ViewProjection view);
-
+	void Initialize(ViewProjection view);
 	ViewProjection viewProjection_;
 
 	// 更新
@@ -21,8 +23,16 @@ public:
 	// 2D背景描画
 	void Draw2DFar();
 
+	// 3D表示
+	void Draw3D();
+
 private:
 	// BG(スプライト)
 	uint32_t textureHandleBG_ = 0;
 	Sprite* spriteBG_ = nullptr;
+
+	// ステージ
+	uint32_t textureHandleStage_ = 0;
+	Model* modelStage_ = nullptr;
+	WorldTransform worldTransformStage_;
 };

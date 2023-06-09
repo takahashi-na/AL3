@@ -1,6 +1,5 @@
 ﻿#include "Stage.h"
 #include "TextureManager.h"
-#include "ViewProjection.h"
 
 // コンストラクタ
 Stage::Stage() {}
@@ -9,10 +8,11 @@ Stage::Stage() {}
 Stage::~Stage() 
 { 
 	delete spriteBG_;
+	delete modelStage_;
 }
 
 // 初期化
-void Stage::Inisialize(ViewProjection view)
+void Stage::Initialize(ViewProjection view)
 {
 	// BG(2Dスプライト)
 	textureHandleBG_ = TextureManager::Load("bg.jpg");
@@ -20,6 +20,11 @@ void Stage::Inisialize(ViewProjection view)
 
 	// メンバー変数に代入
 	viewProjection_ = view;
+
+	// ステージ
+	textureHandleStage_ = TextureManager::Load("stage.jpg");
+	modelStage_ = Model::Create();
+	worldTransformStage_.Initialize();
 }
 
 // 更新
@@ -29,4 +34,11 @@ void Stage::Update() {}
 void Stage::Draw2DFar() 
 { 
 	spriteBG_->Draw(); 
+}
+
+// 3D描画
+void Stage::Draw3D() 
+{
+	// ステージ
+	modelStage_->Draw(worldTransformStage_, viewProjection_, textureHandleStage_);
 }

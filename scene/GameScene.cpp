@@ -1,7 +1,6 @@
 #include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
-#include "ViewProjection.h"
 
 GameScene::GameScene() {}
 
@@ -22,6 +21,10 @@ void GameScene::Initialize() {
 	// ステージ
 	stage_ = new Stage();       
 	stage_->Initialize(viewProjection_);
+
+	viewProjection_.translation_.y = 1;
+	viewProjection_.translation_.z = -6;
+	viewProjection_.Initialize();
 }
 
 void GameScene::Update() 
@@ -55,6 +58,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
+	stage_->Draw3D();
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
