@@ -1,8 +1,13 @@
 #pragma once
-#include "ViewProjection.h"
-#include "Model.h"
-#include "WorldTransform.h"
+#include "DirectXCommon.h"
 #include "Input.h"
+#include "Model.h"
+#include "SafeDelete.h"
+#include "Sprite.h"
+#include "ViewProjection.h"
+#include "WorldTransform.h"
+#include "MathUtilityForText.h"
+#include <cassert>
 
 class Player
 {
@@ -14,7 +19,7 @@ public:
 	~Player();
 
 	// èâä˙âª
-	void Initialize(ViewProjection ViewProjection);
+	void Initialize(ViewProjection View);
 
 	// çXêV
 	void Update();
@@ -30,4 +35,5 @@ private:
 
 	uint32_t textureHandlePlayer_ = 0;
 	Model* modelPlayer_ = nullptr;
+	WorldTransform worldTransformPlayer_;
 };
