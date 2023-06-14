@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Audio.h"
 #include "DirectXCommon.h"
@@ -145,12 +145,23 @@ private: // メンバ変数
 	uint32_t textureHandleGameOver_ = 0;
 	Sprite* spriteGameOver_ = nullptr;
 
+	// スコア表示(スプライト)
+	uint32_t textureHandleNumber_ = 0;
+	Sprite* spriteNumber_[5] = {};
+
+	/* // ライフ(2Dスプライト)
+	for(int i = 0; i < 3; i++) {
+		spriteLife_[i] = Sprite::Create(textureHandlePlayer_, {800.0f + i * 60, 0});
+		spriteLife_[i]->SetSize({40, 40});
+	};*/
+
 	// デバッグテキスト
 	DebugText* debugText_ = nullptr;
 
-	int gameScore_ = 0;   // ゲームスコア
-	int playerLife_ = 3;  // プレイヤーライフ
-	int gameTimer_ = 0; // タイマー
+	int gameScore_ = 0;     // ゲームスコア
+	int playerLife_ = 3;    // プレイヤーライフ
+	int gameTimer_ = 0;     // タイマー
+	int playerTimer_ = 0;   // プレイヤータイマー
 
 	//	サウンド
 	uint32_t soundDataHandleTitleBGM_ = 0;      // タイトルBGM
@@ -184,5 +195,8 @@ private:
 
 	// 敵
 	void EnemyJump();    // 敵の消滅の演出
+
+	// スコア数値
+	void DrawScore();
 
 };

@@ -1,4 +1,4 @@
-#include "GameScene.h"
+﻿#include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
 #include "MathUtilityForText.h"
@@ -18,6 +18,10 @@ GameScene::~GameScene()
 	delete spriteTitle_;      // タイトル
 	delete spriteEnter_;      // エンター
 	delete spriteGameOver_;   // ゲームオーバー
+	for (int i = 0;i < 5;i++)
+	{
+		delete spriteNumber_[i];// スコア数値
+	}
 }
 
 // 初期化
@@ -100,6 +104,13 @@ void GameScene::Initialize() {
 	debugText_ = DebugText::GetInstance();
 	debugText_->Initialize();
 
+	// スコア数値(2Dスプライト)
+	textureHandleNumber_ = TextureManager::Load("number.png");
+	for (int i = 0;i < 5;i++)
+	{
+		spriteNumber_[i] = Sprite::Create(textureHandleNumber_, {300.0f + i * 26, 0});
+	}
+
 	// サウンドデータの読み込み
 	soundDataHandleTitleBGM_ = audio_->LoadWave("Audio/Ring05.wav");
 	soundDataHandleGamePlayBGM_ = audio_->LoadWave("Audio/Ring08.wav");
@@ -152,6 +163,11 @@ void GameScene::PlayerUpdate(){
 
 	worldTransformPlayer_.translation_.x = max(worldTransformPlayer_.translation_.x, -4);
 	worldTransformPlayer_.translation_.x = min(worldTransformPlayer_.translation_.x, 4);
+
+	if (playerTimer_ > 0)
+	{
+		playerTimer_ -= 1;      // タイマーが0より大きければ1を引く
+	}
 }
 
 // ビーム更新
@@ -330,6 +346,9 @@ void GameScene::CollisionPlayerEnemy() {
 
 				// プレイヤーヒットSE
 				audio_->PlayWave(soundDataHandlePlayerHitSE_);
+
+				// タイマーの値変動
+				playerTimer_ = 60;
 			}
 		}
 	}
@@ -475,7 +494,10 @@ void GameScene::GamePlayDraw3D()
 		modelStage_->Draw(worldTransformStage_[i], viewProjection_, textureHandleStage_);
 	}
 	// プレイヤー
-	modelPlayer_->Draw(worldTransformPlayer_, viewProjection_, textureHandlePlayer_);
+	if (playerTimer_ % 4 < 2) 
+	{
+		modelPlayer_->Draw(worldTransformPlayer_, viewProjection_, textureHandlePlayer_);
+	}
 
 	// ビーム
 	for (int i = 0; i < 10; i++) {
@@ -500,10 +522,12 @@ void GameScene::GamePlayDraw2DNear() {
 	// score
 	char str[100];
 	sprintf_s(str, "SCORE %d", gameScore_);
-	debugText_->Print(str, 200, 10, 2);
+	//debugText_->Print(str, 200, 10, 2);
 
-	sprintf_s(str, "LIFE %d", playerLife_);
-	debugText_->Print(str, 900, 10, 2);
+	/*sprintf_s(str, "LIFE %d", playerLife_);
+	debugText_->Print(str, 900, 10, 2);*/
+
+	GameScene::DrawScore();
 }
 
 // タイトル更新
@@ -549,6 +573,8 @@ void GameScene::GamePlayStart()
 	sceneMode_ = 0;
 	gameScore_ = 0;
 	gameTimer_ = 0;
+	playerTimer_ = 0;
+
 	for (int i = 0;i < 10;i++)
 	{
 		isEnemyFlag_[i] = 0;
@@ -626,5 +652,29 @@ void GameScene::EnemyJump()
 				isEnemyFlag_[i] = 0; // 存在しない
 			}
 		}
+	}
+}
+
+// スコア数値の表示
+void GameScene::DrawScore()
+{
+	// 各桁の値を取り出す
+	int eachNumber[5] = {};              // 各桁の値
+	int number = gameScore_;             // 表示する数字
+
+	int keta = 10000;                    // 最初の桁
+	for (int i = 0;i < 5;i++)
+	{
+		eachNumber[i] = number / keta;   // 今の桁の値を求める
+		number = number % keta;          // 次の桁以下の値を取り出す
+		keta = keta / 10;                // 桁を進める
+	}
+
+	// 各桁の数値を描画
+	for (int i = 0;i < 5;i++)
+	{
+		spriteNumber_[i]->SetSize({32, 64});
+		spriteNumber_[i]->SetTextureRect({32.0f * eachNumber[i], 0}, {32, 64});
+		spriteNumber_[i]->Draw();
 	}
 }
