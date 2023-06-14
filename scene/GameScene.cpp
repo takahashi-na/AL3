@@ -8,7 +8,8 @@ GameScene::GameScene() {}
 GameScene::~GameScene()
 {
 	// クラスの削除
-	delete stage_;  // ステージ
+	delete stage_;   // ステージ
+	delete player_;  // プレイヤー
 }
 
 void GameScene::Initialize() {
@@ -18,7 +19,8 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 
 	// 各クラスの生成
-	stage_ = new Stage();
+	stage_ = new Stage();    // ステージ
+	player_ = new Player();  // プレイヤー
 
 	// ビュープロジェクションの初期化
 	viewProjection_.translation_.y = 1;
@@ -27,12 +29,14 @@ void GameScene::Initialize() {
 
 	// 各クラスの初期化
 	stage_->Initialize(viewProjection_);  // ステージ
+	player_->Initialize(viewProjection_); // プレイヤー
 
 }
 
 void GameScene::Update() 
 { 
 	stage_->Update(); // 更新 
+	player_->Update();
 }
 
 void GameScene::Draw() {
@@ -59,7 +63,8 @@ void GameScene::Draw() {
 	Model::PreDraw(commandList);
 
 	// ここに3Dオブジェクトの描画処理を追加できる
-	stage_->Draw3D();
+	stage_->Draw3D();  // ステージ
+	player_->Draw3D(); // プレイヤー
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
