@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Audio.h"
 #include "DirectXCommon.h"
@@ -9,43 +9,33 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 
-/// <summary>
-/// ゲームシーン
-/// </summary>
+#include "Stage.h"
+
+// ゲームシーン
 class GameScene {
 
 public: // メンバ関数
-	/// <summary>
-	/// コンストクラタ
-	/// </summary>
+	// コンストクラタ
 	GameScene();
-
-	/// <summary>
-	/// デストラクタ
-	/// </summary>
+	
+	// デストラクタ
 	~GameScene();
 
-	/// <summary>
-	/// 初期化
-	/// </summary>
+	// 初期化
 	void Initialize();
 
-	/// <summary>
-	/// 毎フレーム処理
-	/// </summary>
+	// 毎フレーム処理
 	void Update();
 
-	/// <summary>
-	/// 描画
-	/// </summary>
+	// 描画
 	void Draw();
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
+	Stage* stage_ = nullptr;  // ステージ
 
-	/// <summary>
-	/// ゲームシーン用
-	/// </summary>
+	// ビュープロジェクション(共通)
+	ViewProjection viewProjection_;
 };
