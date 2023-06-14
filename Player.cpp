@@ -36,6 +36,18 @@ void Player::Update()
 
 	// 変換行列を定数バッファに転送
 	worldTransformPlayer_.TransferMatrix();
+
+	// 右へ移動
+	if (input_->PushKey(DIK_RIGHT)) {
+		worldTransformPlayer_.translation_.x += 0.1f;
+	}
+	// 左へ移動
+	if (input_->PushKey(DIK_LEFT)) {
+		worldTransformPlayer_.translation_.x -= 0.1f;
+	}
+
+	worldTransformPlayer_.translation_.x = max(worldTransformPlayer_.translation_.x, -4);
+	worldTransformPlayer_.translation_.x = min(worldTransformPlayer_.translation_.x, 4);
 }
 
 // 3D描画
