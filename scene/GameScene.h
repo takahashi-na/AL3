@@ -11,6 +11,7 @@
 
 #include "Stage.h"
 #include "Player.h"
+#include "Beam.h"
 
 
 // ゲームシーン
@@ -38,6 +39,7 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 	Stage* stage_ = nullptr;   // ステージ
 	Player* player_ = nullptr; // プレイヤー
+	Beam* beam_ = nullptr;     // びーむ
 
 	// ビュープロジェクション(共通)
 	ViewProjection viewProjection_;
