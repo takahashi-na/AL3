@@ -149,11 +149,9 @@ private: // メンバ変数
 	uint32_t textureHandleNumber_ = 0;
 	Sprite* spriteNumber_[5] = {};
 
-	/* // ライフ(2Dスプライト)
-	for(int i = 0; i < 3; i++) {
-		spriteLife_[i] = Sprite::Create(textureHandlePlayer_, {800.0f + i * 60, 0});
-		spriteLife_[i]->SetSize({40, 40});
-	};*/
+	// ライフ
+	uint32_t textureHandleLife_ = 0;
+	Sprite* spriteLife_[3] = {};
 
 	// デバッグテキスト
 	DebugText* debugText_ = nullptr;

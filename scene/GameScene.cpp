@@ -22,6 +22,10 @@ GameScene::~GameScene()
 	{
 		delete spriteNumber_[i];// スコア数値
 	}
+	for (int i = 0; i < 3; i++) 
+	{
+		delete spriteLife_[i]; // ライフ
+	}
 }
 
 // 初期化
@@ -110,6 +114,15 @@ void GameScene::Initialize() {
 	{
 		spriteNumber_[i] = Sprite::Create(textureHandleNumber_, {300.0f + i * 26, 0});
 	}
+
+	 // ライフ(2Dスプライト)
+	textureHandleLife_=TextureManager::Load("player.png");
+	for (int i = 0; i < playerLife_; i++) 
+	{
+		spriteLife_[i] = Sprite::Create(textureHandlePlayer_, {800.0f + i * 60, 0});
+		spriteLife_[i]->SetSize({40, 40});
+	};
+
 
 	// サウンドデータの読み込み
 	soundDataHandleTitleBGM_ = audio_->LoadWave("Audio/Ring05.wav");
@@ -210,8 +223,6 @@ void GameScene::BeamBorn()
 	{
 		if (isBeamFlag_[i] == true)
 			continue;
-
-		//
 
 		// 発射タイマーが0ならば
 		if (beamTimer_ == 0) {
@@ -521,8 +532,8 @@ void GameScene::GamePlayDraw2DBack() {
 void GameScene::GamePlayDraw2DNear() {
 	// score
 	char str[100];
-	sprintf_s(str, "SCORE %d", gameScore_);
-	//debugText_->Print(str, 200, 10, 2);
+	sprintf_s(str, "SCORE");                 // 多分違うけど一旦これで放置
+	debugText_->Print(str, 200, 10, 2);
 
 	/*sprintf_s(str, "LIFE %d", playerLife_);
 	debugText_->Print(str, 900, 10, 2);*/
