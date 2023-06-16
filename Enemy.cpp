@@ -41,10 +41,6 @@ void Enemy::Draw3D()
 	}
 }
 
-//void Enemy::Move() {}
-//
-//void Enemy::Born() {}
-
 // 敵移動
 void Enemy::Move() 
 {
