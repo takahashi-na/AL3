@@ -35,9 +35,32 @@ void Enemy::Update()
 
 void Enemy::Draw3D() 
 {
-	modelEnemy_->Draw(worldTransformEnemy_, viewProjection_, textureHandleEnemy_);
+	if (aliveFlag_ == 1)
+	{
+		modelEnemy_->Draw(worldTransformEnemy_, viewProjection_, textureHandleEnemy_);
+	}
 }
 
-void Enemy::Move() {}
+//void Enemy::Move() {}
+//
+//void Enemy::Born() {}
 
-void Enemy::Born() {}
+// 敵移動
+void Enemy::Move() 
+{
+		
+}
+
+// 敵生成
+void Enemy::Born() 
+{ 
+	if (aliveFlag_ == 0) 
+	{
+		 aliveFlag_ = 1;
+		int x = rand() % 80;
+		float x2 = (float)x/10-4;
+
+		worldTransformEnemy_.translation_.x = x2;
+		worldTransformEnemy_.translation_.z = 40.0f;
+    }
+}
