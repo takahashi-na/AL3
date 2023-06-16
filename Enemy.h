@@ -26,6 +26,15 @@ public:
 	// 2D背景描画
 	void Draw3D();
 
+	// 移動
+	void Move();
+
+	// 発生（発射）
+	void Born();
+
+	// 存在フラグ
+	int aliveFlag_ = 0;
+
 private:
 	// 敵
 	uint32_t textureHandleEnemy_ = 0;

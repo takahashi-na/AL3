@@ -37,3 +37,7 @@ void Enemy::Draw3D()
 {
 	modelEnemy_->Draw(worldTransformEnemy_, viewProjection_, textureHandleEnemy_);
 }
+
+void Enemy::Move() {}
+
+void Enemy::Born() {}
