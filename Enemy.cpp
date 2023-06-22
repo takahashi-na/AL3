@@ -23,6 +23,12 @@ void Enemy::Initialize(ViewProjection view)
 
 void Enemy::Update() 
 {
+	// 移動
+	Move();
+
+	// 発生
+	Born();
+
 	// 変換行列を更新
 	worldTransformEnemy_.matWorld_ = MakeAffineMatrix(
 	    worldTransformEnemy_.scale_,
