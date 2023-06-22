@@ -66,7 +66,7 @@ void Beam::Move()
 
 void Beam::Born() 
 {
-	if (aliveFlag_ == 0) 
+	if (aliveFlag_ == 0) // フラグが0になったら画像を消す処理を作らないと奥で一生止まる
 	{
 		if (input_->TriggerKey(DIK_SPACE)) 
 		{
