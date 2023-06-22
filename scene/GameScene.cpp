@@ -33,7 +33,7 @@ void GameScene::Initialize() {
 	// 各クラスの初期化
 	stage_->Initialize(viewProjection_);  // ステージ
 	player_->Initialize(viewProjection_); // プレイヤー
-	beam_->Initialize(viewProjection_);   // ビーム
+	beam_->Initialize(viewProjection_,player_);   // ビーム
 	enemy_->Initialize(viewProjection_);
 
 }

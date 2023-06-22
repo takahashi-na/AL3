@@ -8,6 +8,8 @@
 #include "MathUtilityForText.h"
 #include "Input.h"
 
+#include "Player.h"
+
 class Beam 
 {
 public:
@@ -18,7 +20,7 @@ public:
 	~Beam();
 
 	// 初期化
-	void Initialize(ViewProjection view);
+	void Initialize(ViewProjection view,Player* player);
 
 	// 更新
 	void Update();
@@ -40,6 +42,9 @@ private:
 
 	// インプットクラス
 	Input* input_ = nullptr;
+
+	// プレイヤー
+	Player* player_ = nullptr;
 
 	// 存在フラグ
 	int aliveFlag_ = 0;

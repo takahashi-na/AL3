@@ -26,6 +26,12 @@ public:
 	// 2D背景描画
 	void Draw3D();
 
+	// X座標の獲得
+	float GetX() { return worldTransformPlayer_.translation_.x; }
+
+	// Z座標の獲得
+	float GetZ() { return worldTransformPlayer_.translation_.z; }
+
 private:
 	// プレイヤー
 	uint32_t textureHandlePlayer_ = 0;
