@@ -44,7 +44,14 @@ void Enemy::Draw3D()
 // 敵移動
 void Enemy::Move() 
 {
-		
+	if (aliveFlag_ == 1) {
+		worldTransformEnemy_.rotation_.x -= 0.15f;
+		worldTransformEnemy_.translation_.z -= 0.5f;
+	}
+
+	// 画面端処理
+	if (worldTransformEnemy_.translation_.z < -5)
+		aliveFlag_ = 0;
 }
 
 // 敵生成
