@@ -45,7 +45,8 @@ void Stage::Update() {}
 // 2D背景描画
 void Stage::Draw2DFar() 
 { 
-	spriteBG_->Draw(); }
+	spriteBG_->Draw(); 
+}
 
 void Stage::Draw3D() 
 {
