@@ -18,6 +18,8 @@ GameScene::~GameScene()
 	delete spriteTitle_;      // タイトル
 	delete spriteEnter_;      // エンター
 	delete spriteGameOver_;   // ゲームオーバー
+	delete spriteScore_;      // スコア
+
 	for (int i = 0;i < 5;i++)
 	{
 		delete spriteNumber_[i];// スコア数値
@@ -116,13 +118,16 @@ void GameScene::Initialize() {
 	}
 
 	 // ライフ(2Dスプライト)
-	textureHandleLife_=TextureManager::Load("player.png");
+	//textureHandleLife_=TextureManager::Load("player.png");
 	for (int i = 0; i < playerLife_; i++) 
 	{
 		spriteLife_[i] = Sprite::Create(textureHandlePlayer_, {800.0f + i * 60, 0});
 		spriteLife_[i]->SetSize({40, 40});
 	};
 
+	// すこあ
+	textureHandleScore_ = TextureManager::Load("score.png");
+	spriteScore_ = Sprite::Create(textureHandleScore_, {160, 0});
 
 	// サウンドデータの読み込み
 	soundDataHandleTitleBGM_ = audio_->LoadWave("Audio/Ring05.wav");
@@ -529,16 +534,15 @@ void GameScene::GamePlayDraw2DBack() {
 }
 
 // ゲームプレイ近景2D近景
-void GameScene::GamePlayDraw2DNear() {
+void GameScene::GamePlayDraw2DNear() 
+{
 	// score
-	char str[100];
-	sprintf_s(str, "SCORE");                 // 多分違うけど一旦これで放置
-	debugText_->Print(str, 200, 10, 2);
-
-	/*sprintf_s(str, "LIFE %d", playerLife_);
-	debugText_->Print(str, 900, 10, 2);*/
-
+	spriteScore_->Draw();
 	GameScene::DrawScore();
+
+	for (int i = 0; i < playerLife_; i++) {
+		spriteLife_[i]->Draw();
+	}
 }
 
 // タイトル更新

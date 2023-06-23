@@ -133,6 +133,7 @@ private: // メンバ変数
 	float enemySpeed_[10] = {};      // 敵の速度
 	float enemyJumpSpeed_[10] = {};  // 敵ジャンプの移動速度
 
+
 	// タイトル(スプライト)
 	uint32_t textureHandleTitle_ = 0;
 	Sprite* spriteTitle_ = nullptr;
@@ -152,6 +153,10 @@ private: // メンバ変数
 	// ライフ
 	uint32_t textureHandleLife_ = 0;
 	Sprite* spriteLife_[3] = {};
+
+	// すこあ
+	uint32_t textureHandleScore_ = 0;
+	Sprite* spriteScore_ = nullptr;
 
 	// デバッグテキスト
 	DebugText* debugText_ = nullptr;
