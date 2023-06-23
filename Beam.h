@@ -34,6 +34,18 @@ public:
 	// 発生（発射）
 	void Born();
 
+	// 衝突処理
+	void Hit() { aliveFlag_ = 0; }
+
+	// 存在フラグ
+	int aliveFlag_ = 0;
+
+	// X座標の獲得
+	float GetX() { return worldTransformBeam_.translation_.x; }
+
+	// Z座標の獲得
+	float GetZ() { return worldTransformBeam_.translation_.z; }
+
 private:
 	// ビーム
 	uint32_t textureHandleBeam_ = 0;
@@ -45,9 +57,6 @@ private:
 
 	// プレイヤー
 	Player* player_ = nullptr;
-
-	// 存在フラグ
-	int aliveFlag_ = 0;
 
 	// ビュープロジェクション(共通)
 	ViewProjection viewProjection_;

@@ -19,7 +19,7 @@ void Beam::Initialize(ViewProjection view,Player* player)
 	// ビーム
 	textureHandleBeam_ = TextureManager::Load("beam.png");
 	modelBeam_ = Model::Create();
-	worldTransformBeam_.scale_ = {0.5f, 0.5f, 0.5f};
+	worldTransformBeam_.scale_ = {0.3f, 0.3f, 0.3f};
 	worldTransformBeam_.Initialize();
 
 	player_ = player;
@@ -46,15 +46,20 @@ void Beam::Update()
 }
 
 // 3D描画
-void Beam::Draw3D() 
-{
-	modelBeam_->Draw(worldTransformBeam_, viewProjection_, textureHandleBeam_); }
+void Beam::Draw3D() {
+	if (aliveFlag_ == 1)
+	{
+		modelBeam_->Draw(worldTransformBeam_, viewProjection_, textureHandleBeam_);
+	}
+}
+	
 
 void Beam::Move() 
 {
 	// 奥へ移動
 	if (aliveFlag_ == 0)
 		return;
+
 	worldTransformBeam_.rotation_.x += 0.1f;
 	worldTransformBeam_.translation_.z += 0.3f;
 

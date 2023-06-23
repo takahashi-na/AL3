@@ -44,6 +44,8 @@ void GameScene::Update()
 	player_->Update();
 	beam_->Update();
 	enemy_->Update();
+	CollisionPlayerEnemy();
+	CollisionBeamEnemy();
 }
 
 void GameScene::Draw() {
@@ -91,4 +93,40 @@ void GameScene::Draw() {
 	Sprite::PostDraw();
 
 #pragma endregion
+}
+
+// 衝突判定(プレイヤーと敵)　後で更新から呼び出す。呼び出したらこの文は消す
+void GameScene::CollisionPlayerEnemy()
+{
+	// 敵が存在すれば
+	if (enemy_->GetFlag() == 1)
+	{
+		// 差を求める
+		float dx = abs(player_->GetX() - enemy_->GetX());
+		float dz = abs(player_->GetZ() - enemy_->GetZ());
+
+		// 衝突したら
+		if (dx < 1 && dz < 1)
+		{
+			// 衝突処理
+			enemy_->Hit();
+		}
+	}
+}
+
+void GameScene::CollisionBeamEnemy() 
+{
+	// 敵が存在すれば
+	if (enemy_->GetFlag() == 1) {
+		// 差を求める
+		float dx = abs(beam_->GetX() - enemy_->GetX());
+		float dz = abs(beam_->GetZ() - enemy_->GetZ());
+
+		// 衝突したら
+		if (dx < 1 && dz < 1) {
+			// 衝突処理
+			enemy_->Hit();
+			beam_->Hit();
+		}
+	}
 }

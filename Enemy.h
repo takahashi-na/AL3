@@ -32,8 +32,20 @@ public:
 	// 発生（発射）
 	void Born();
 
+	// 衝突処理
+	void Hit() { aliveFlag_ = 0; }
+
 	// 存在フラグ
 	int aliveFlag_ = 0;
+
+	// 存在フラグの獲得
+	int GetFlag() { return aliveFlag_; }
+
+	// X座標の獲得
+	float GetX() { return worldTransformEnemy_.translation_.x; }
+
+	// Z座標の獲得
+	float GetZ() { return worldTransformEnemy_.translation_.z; }
 
 private:
 	// 敵
