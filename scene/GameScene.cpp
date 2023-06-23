@@ -36,6 +36,9 @@ void GameScene::Initialize() {
 	beam_->Initialize(viewProjection_,player_);   // ビーム
 	enemy_->Initialize(viewProjection_);
 
+	// デバッグテキスト
+	debugText_ = DebugText::GetInstance();
+	debugText_->Initialize();
 }
 
 void GameScene::Update() 
@@ -85,9 +88,13 @@ void GameScene::Draw() {
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(commandList);
 
-	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
-	/// </summary>
+	char str[100];
+	sprintf_s(str, "SCORE %d", gameScore_);
+	debugText_->Printf(str,200,10,2);
+	debugText_->DrawAll();
+
+
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -110,6 +117,7 @@ void GameScene::CollisionPlayerEnemy()
 		{
 			// 衝突処理
 			enemy_->Hit();
+			playerLife_ -= 1;
 		}
 	}
 }
@@ -127,6 +135,8 @@ void GameScene::CollisionBeamEnemy()
 			// 衝突処理
 			enemy_->Hit();
 			beam_->Hit();
+
+			gameScore_ += 100;
 		}
 	}
 }
