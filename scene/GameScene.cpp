@@ -91,10 +91,12 @@ void GameScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	char str[100];
 	sprintf_s(str, "SCORE %d", gameScore_);
-	debugText_->Printf(str,200,10,2);
+	debugText_->Print(str, 200, 10, 2);
+
+	sprintf_s(str, "LIFE %d", playerLife_);
+	debugText_->Print(str, 900, 10, 2);
+
 	debugText_->DrawAll();
-
-
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
