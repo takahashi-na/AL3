@@ -4,31 +4,16 @@
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene()
-{
-	delete gamePlay_;
-}
+GameScene::~GameScene() {}
 
 void GameScene::Initialize() 
-{
+
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
-	gamePlay_->Initialize(viewProjection_);
 }
 
-void GameScene::Update() 
-{ 
-	gamePlay_->Update();
-
-	// 各シーン更新
-	switch (sceneMode_)
-	{
-	case 0:
-		gamePlay_->Update();    // ゲームプレイ
-		break;
-	}
-}
+void GameScene::Update() {}
 
 void GameScene::Draw() {
 
@@ -40,13 +25,8 @@ void GameScene::Draw() {
 	Sprite::PreDraw(commandList);
 
 	// ここに背景スプライトの描画処理を追加できる
-	// 背景の描画
-	// 各シーン更新
-	switch (sceneMode_) {
-	case 0:
-		gamePlay_->Draw2DFar(); // ゲームプレイ
-		break;
-	}
+	/// ここに背景スプライトの描画処理を追加できる
+	/// </summary>
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -58,12 +38,9 @@ void GameScene::Draw() {
 	// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
 
-	// ここに3Dオブジェクトの描画処理を追加できる
-	switch (sceneMode_) {
-	case 0:
-		gamePlay_->Draw3D(); // ゲームプレイ
-		break;
-	}
+	/// <summary>
+	/// ここに3Dオブジェクトの描画処理を追加できる
+	/// </summary>
 	
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -78,11 +55,5 @@ void GameScene::Draw() {
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
-	switch (sceneMode_) {
-	case 0:
-		gamePlay_->Draw2DNear(); // ゲームプレイ
-		break;
-	}
-	
 #pragma endregion
 }
